@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nəbiyev Store — Alqı-Satqı</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f5f6f8;
+  --white:#ffffff;
+  --border:#e2e5ea;
+  --accent:#e83030;
+  --accent-h:#c92525;
+  --text:#1a1a2e;
+  --muted:#8a8fa8;
+  --muted2:#b0b5c8;
+  --card:#ffffff;
+  --blue:#2563eb;
+  --green:#16a34a;
+  --yellow:#d97706;
+  --tag-bg:#f0f2f5;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── HEADER ── */
+.header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;}
+.header-top{background:var(--accent);padding:0.35rem 0;}
+.header-top-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;color:rgba(255,255,255,0.9);}
+.header-top a{color:rgba(255,255,255,0.85);text-decoration:none;cursor:pointer;}
+.header-top a:hover{color:#fff;}
+.header-main{max-width:1280px;margin:0 auto;padding:0.75rem 1.5rem;display:flex;align-items:center;gap:1.2rem;}
+.logo{display:flex;align-items:center;gap:0.5rem;text-decoration:none;cursor:pointer;flex-shrink:0;}
+.logo-icon{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.logo-text{font-size:1.25rem;font-weight:800;color:var(--text);letter-spacing:-0.3px;}
+.logo-text span{color:var(--accent);}
+.search-wrap{flex:1;max-width:580px;display:flex;gap:0;}
+.search-inp{flex:1;border:2px solid var(--border);border-right:none;border-radius:10px 0 0 10px;padding:0.6rem 1rem;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;background:#fff;}
+.search-inp:focus{border-color:var(--accent);}
+.search-btn{background:var(--accent);border:none;border-radius:0 10px 10px 0;padding:0 1.2rem;cursor:pointer;color:#fff;font-size:1rem;transition:background 0.2s;}
+.search-btn:hover{background:var(--accent-h);}
+.header-actions{display:flex;align-items:center;gap:0.6rem;margin-left:auto;}
+.hbtn{padding:0.5rem 1rem;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:600;transition:all 0.2s;}
+.hbtn-outline{background:#fff;border:1.5px solid var(--border);color:var(--text);}
+.hbtn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.hbtn-fill{background:var(--accent);color:#fff;}
+.hbtn-fill:hover{background:var(--accent-h);}
+.user-chip{display:flex;align-items:center;gap:0.5rem;padding:0.4rem 0.8rem;background:var(--tag-bg);border-radius:8px;cursor:pointer;border:1.5px solid var(--border);font-size:0.82rem;font-weight:600;}
+.user-chip:hover{border-color:var(--accent);color:var(--accent);}
+.u-dot{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;}
+
+/* ── CATS NAV ── */
+.cats-nav{background:var(--white);border-bottom:1px solid var(--border);}
+.cats-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;}
+.cats-inner::-webkit-scrollbar{display:none;}
+.cat-tab{display:flex;align-items:center;gap:0.4rem;padding:0.6rem 1rem;font-size:0.8rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;background:transparent;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif;}
+.cat-tab:hover{color:var(--accent);}
+.cat-tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ── AUTH MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;display:none;align-items:center;justify-content:center;padding:1rem;}
+.overlay.on{display:flex;}
+.modal{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:420px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.15);}
+.modal-x{position:absolute;top:1rem;right:1rem;background:#f0f2f5;border:none;border-radius:6px;padding:0.3rem 0.6rem;cursor:pointer;font-size:0.9rem;color:#666;}
+.modal-x:hover{background:#e2e5ea;color:#333;}
+.modal-logo{text-align:center;margin-bottom:1.5rem;}
+.modal-logo h2{font-size:1.4rem;font-weight:800;color:var(--text);}
+.modal-logo p{font-size:0.8rem;color:var(--muted);margin-top:0.2rem;}
+.m-tabs{display:flex;background:#f0f2f5;border-radius:8px;padding:0.25rem;gap:0.2rem;margin-bottom:1.5rem;}
+.m-tab{flex:1;padding:0.5rem;text-align:center;border-radius:6px;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--muted);border:none;background:transparent;font-family:'Inter',sans-serif;transition:all 0.2s;}
+.m-tab.on{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.1);}
+.fg{margin-bottom:1rem;}
+.lbl{display:block;font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.4px;}
+.inp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;font-family:'Inter',sans-serif;font-size:0.88rem;outline:none;transition:all 0.2s;color:var(--text);}
+.inp:focus{border-color:var(--accent);}
+.inp::placeholder{color:var(--muted2);}
+.btn{padding:0.65rem 1.2rem;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:0.88rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;}
+.btn-r{background:var(--accent);color:#fff;}
+.btn-r:hover{background:var(--accent-h);}
+.btn-g{background:#fff;border:1.5px solid var(--border);color:var(--text);}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+.btn-sm{padding:0.35rem 0.7rem;font-size:0.78rem;border-radius:6px;}
+.w-full{width:100%;}
+.bonus{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:0.6rem 0.9rem;font-size:0.78rem;color:var(--green);margin-bottom:1rem;text-align:center;}
+
+/* ── MAIN LAYOUT ── */
+.main-wrap{max-width:1280px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:220px 1fr;gap:1.5rem;}
+@media(max-width:768px){.main-wrap{grid-template-columns:1fr;}.sidebar-cats{display:none;}}
+
+/* ── SIDEBAR ── */
+.sidebar-cats{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:fit-content;}
+.sb-title{padding:0.9rem 1rem;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);border-bottom:1px solid var(--border);background:#fafbfc;}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:0.65rem 1rem;font-size:0.85rem;cursor:pointer;transition:all 0.2s;border-bottom:1px solid #f5f6f8;color:var(--text);}
+.sb-item:last-child{border-bottom:none;}
+.sb-item:hover{background:#fef2f2;color:var(--accent);}
+.sb-item.on{background:#fef2f2;color:var(--accent);font-weight:600;}
+.sb-left{display:flex;align-items:center;gap:0.5rem;}
+.sb-count{background:var(--tag-bg);color:var(--muted);font-size:0.7rem;font-weight:600;padding:0.15rem 0.45rem;border-radius:10px;}
+.sb-item.on .sb-count{background:#fee2e2;color:var(--accent);}
+
+/* ── CONTENT ── */
+.content-area{}
+.content-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap;gap:0.5rem;}
+.content-title{font-size:1rem;font-weight:700;}
+.content-count{font-size:0.8rem;color:var(--muted);}
+.sort-select{border:1.5px solid var(--border);border-radius:8px;padding:0.4rem 0.7rem;font-family:'Inter',sans-serif;font-size:0.8rem;color:var(--text);background:#fff;outline:none;cursor:pointer;}
+.sort-select:focus{border-color:var(--accent);}
+
+/* ── AD GRID ── */
+.ad-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;}
+
+/* ── AD CARD ── */
+.ac{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.25s;}
+.ac:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(232,48,48,0.1);transform:translateY(-2px);}
+.ac-img{width:100%;aspect-ratio:4/3;background:#f5f6f8;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden;}
+.ac-img-inner{transition:transform 0.3s;}
+.ac:hover .ac-img-inner{transform:scale(1.05);}
+.ac-fav{position:absolute;top:0.5rem;right:0.5rem;width:28px;height:28px;background:rgba(255,255,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;cursor:pointer;transition:all 0.2s;border:1px solid var(--border);}
+.ac-fav:hover{background:#fff;transform:scale(1.1);}
+.ac-fav.active{color:var(--accent);}
+.ac-new{position:absolute;top:0.5rem;left:0.5rem;background:var(--green);color:#fff;font-size:0.62rem;font-weight:700;padding:0.15rem 0.45rem;border-radius:5px;text-transform:uppercase;letter-spacing:0.3px;}
+.ac-body{padding:0.7rem 0.85rem;}
+.ac-price{font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:0.25rem;}
+.ac-price.free{color:var(--green);font-size:0.9rem;}
+.ac-title{font-size:0.82rem;color:var(--text);font-weight:500;margin-bottom:0.3rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4;}
+.ac-loc{font-size:0.73rem;color:var(--muted);display:flex;align-items:center;gap:0.25rem;}
+
+/* ── AD DETAIL MODAL ── */
+.detail-modal{max-width:680px;}
+.detail-img{width:100%;aspect-ratio:4/3;background:#f5f6f8;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:7rem;margin-bottom:1.5rem;border:1px solid var(--border);}
+.detail-price{font-size:1.8rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;}
+.detail-price.free{color:var(--green);font-size:1.3rem;}
+.detail-title{font-size:1.15rem;font-weight:700;margin-bottom:0.8rem;}
+.detail-meta{display:flex;gap:1.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.dm-i{display:flex;align-items:center;gap:0.35rem;font-size:0.8rem;color:var(--muted);}
+.detail-desc{font-size:0.88rem;color:#444;line-height:1.7;margin-bottom:1.5rem;border-top:1px solid var(--border);padding-top:1rem;}
+.seller-box{background:#fafbfc;border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;align-items:center;gap:1rem;}
+.seller-ava{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;flex-shrink:0;}
+.seller-info{flex:1;}
+.seller-name{font-weight:700;font-size:0.9rem;margin-bottom:0.1rem;}
+.seller-joined{font-size:0.73rem;color:var(--muted);}
+.call-btn{background:var(--green);color:#fff;padding:0.6rem 1.2rem;border-radius:8px;border:none;font-family:'Inter',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;gap:0.4rem;}
+.call-btn:hover{background:#15803d;}
+
+/* ── POST AD MODAL ── */
+.post-modal{max-width:560px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.inp-sel{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;font-family:'Inter',sans-serif;font-size:0.88rem;outline:none;transition:all 0.2s;color:var(--text);background:#fff;}
+.inp-sel:focus{border-color:var(--accent);}
+.inp-ta{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;font-family:'Inter',sans-serif;font-size:0.88rem;outline:none;resize:vertical;min-height:90px;transition:all 0.2s;color:var(--text);}
+.inp-ta:focus{border-color:var(--accent);}
+
+/* ── PROFILE PAGE ── */
+.profile-wrap{max-width:800px;margin:0 auto;padding:1.5rem;}
+.profile-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;}
+.profile-ava{width:70px;height:70px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;flex-shrink:0;}
+.profile-info h2{font-size:1.2rem;font-weight:700;margin-bottom:0.2rem;}
+.profile-info p{font-size:0.82rem;color:var(--muted);}
+.profile-tabs{display:flex;gap:0.3rem;margin-bottom:1.5rem;}
+.ptab{padding:0.5rem 1rem;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;font-size:0.82rem;font-weight:600;font-family:'Inter',sans-serif;transition:all 0.2s;}
+.ptab:hover,.ptab.on{border-color:var(--accent);color:var(--accent);background:#fef2f2;}
+.my-ads-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;}
+
+/* ── BANNER HERO ── */
+.hero-banner{background:linear-gradient(135deg,var(--accent),#c92525);padding:2.5rem 1.5rem;text-align:center;color:#fff;border-radius:0;}
+.hero-banner h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;margin-bottom:0.5rem;letter-spacing:-0.5px;}
+.hero-banner p{opacity:0.9;font-size:0.92rem;margin-bottom:1.5rem;}
+.hero-search{display:flex;max-width:520px;margin:0 auto;}
+.hero-search input{flex:1;border:none;border-radius:10px 0 0 10px;padding:0.75rem 1.1rem;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;}
+.hero-search button{background:#fff;color:var(--accent);border:none;border-radius:0 10px 10px 0;padding:0 1.3rem;font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;white-space:nowrap;}
+
+/* ── PAGE SECTIONS ── */
+.page{display:none;}.page.on{display:block;}
+.sec-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.sec-h{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:0.4rem;}
+.view-all{font-size:0.78rem;color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none;}
+.view-all:hover{text-decoration:underline;}
+
+/* ── TOAST ── */
+#toasts{position:fixed;bottom:1.5rem;right:1.5rem;z-index:99999;display:flex;flex-direction:column;gap:0.4rem;}
+.toast{background:#fff;border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;min-width:220px;font-size:0.82rem;font-weight:600;display:flex;align-items:center;gap:0.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.1);animation:toastIn 0.3s ease;}
+.toast.s{border-left:3px solid var(--green);}
+.toast.e{border-left:3px solid var(--accent);}
+.toast.i{border-left:3px solid var(--blue);}
+@keyframes toastIn{from{transform:translateX(110%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+/* ── EMPTY ── */
+.empty{text-align:center;padding:3rem;color:var(--muted);}
+.empty .ei{font-size:3rem;margin-bottom:0.8rem;}
+.empty h3{font-weight:600;color:var(--text);margin-bottom:0.3rem;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){.header-actions{display:none;}.logo-text{font-size:1rem;}.grid2{grid-template-columns:1fr;}}
+
+/* ── MY AD CARD (profile) ── */
+.my-ac{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.2s;}
+.my-ac:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(232,48,48,0.08);}
+.my-ac-img{width:100%;aspect-ratio:4/3;background:#f5f6f8;display:flex;align-items:center;justify-content:center;font-size:3rem;cursor:pointer;position:relative;}
+.my-ac-vip{position:absolute;top:0.5rem;left:0.5rem;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-size:0.6rem;font-weight:800;padding:0.2rem 0.5rem;border-radius:5px;text-transform:uppercase;letter-spacing:0.5px;}
+.my-ac-body{padding:0.7rem 0.85rem;}
+.my-ac-price{font-size:1rem;font-weight:800;margin-bottom:0.2rem;}
+.my-ac-price.free{color:var(--green);font-size:0.88rem;}
+.my-ac-title{font-size:0.8rem;color:var(--text);font-weight:500;margin-bottom:0.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.my-ac-acts{display:flex;gap:0.35rem;flex-wrap:wrap;}
+.abtn{padding:0.3rem 0.6rem;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:0.72rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.25rem;}
+.abtn-edit{background:#dbeafe;color:#1d4ed8;}
+.abtn-edit:hover{background:#bfdbfe;}
+.abtn-boost{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;border:1px solid #fcd34d;}
+.abtn-boost:hover{background:linear-gradient(135deg,#fde68a,#fcd34d);}
+.abtn-del{background:#fee2e2;color:#dc2626;}
+.abtn-del:hover{background:#fecaca;}
+
+/* ── OWNER ACTIONS IN DETAIL ── */
+.owner-acts{display:flex;gap:0.6rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);flex-wrap:wrap;}
+
+/* ── BOOST MODAL ── */
+.boost-modal{max-width:480px;}
+.boost-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-bottom:1.2rem;}
+.boost-card{border:2px solid var(--border);border-radius:12px;padding:1rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.boost-card:hover{border-color:var(--accent);}
+.boost-card.selected{border-color:var(--accent);background:#fef2f2;}
+.boost-card .bc-ico{font-size:1.8rem;margin-bottom:0.4rem;}
+.boost-card .bc-name{font-size:0.8rem;font-weight:700;margin-bottom:0.2rem;}
+.boost-card .bc-price{font-size:1.1rem;font-weight:800;color:var(--accent);}
+.boost-card .bc-days{font-size:0.68rem;color:var(--muted);margin-top:0.2rem;}
+.boost-card .bc-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:0.6rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:10px;white-space:nowrap;}
+.boost-info{background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:0.7rem;font-size:0.78rem;color:#713f12;margin-bottom:1rem;}
+.vip-badge{display:inline-flex;align-items:center;gap:0.3rem;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-size:0.65rem;font-weight:800;padding:0.2rem 0.5rem;border-radius:5px;text-transform:uppercase;}
+
+/* ── AD CARD VIP ── */
+.ac.vip{border-color:#f59e0b;box-shadow:0 2px 12px rgba(245,158,11,0.2);}
+.ac-vip-badge{position:absolute;top:0.5rem;left:0.5rem;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-size:0.6rem;font-weight:800;padding:0.18rem 0.5rem;border-radius:5px;text-transform:uppercase;letter-spacing:0.3px;}
+</style>
+</head>
+<body>
+<div id="toasts"></div>
+
+<!-- ██ HEADER ██ -->
+<header class="header">
+  <div class="header-top">
+    <div class="header-top-inner">
+      <span>📍 Azərbaycan</span>
+      <div style="display:flex;gap:1.2rem;">
+        <a onclick="navigate('home')">Ana səhifə</a>
+        <a onclick="showModal('postModal')">Elan ver</a>
+        <a onclick="navigate('profile')">Profil</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-main">
+    <div class="logo" onclick="navigate('home')">
+      <div class="logo-icon">🛍️</div>
+      <div class="logo-text">Nəbiyev<span>Store</span></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-inp" id="mainSearch" placeholder="Məhsul, kateqoriya axtar..." onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="search-btn" onclick="doSearch()">🔍</button>
+    </div>
+    <div class="header-actions" id="headerActions"></div>
+  </div>
+  <nav class="cats-nav">
+    <div class="cats-inner" id="catTabs"></div>
+  </nav>
+</header>
+
+<!-- ██ AUTH MODAL ██ -->
+<div class="overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal('authModal')">✕</button>
+    <div class="modal-logo">
+      <h2>🛍️ Nəbiyev Store</h2>
+      <p>Hesabına daxil ol</p>
+    </div>
+    <div class="m-tabs">
+      <button class="m-tab on" id="t-login" onclick="switchAuthTab('login')">Giriş</button>
+      <button class="m-tab" id="t-reg" onclick="switchAuthTab('reg')">Qeydiyyat</button>
+    </div>
+    <div id="f-login">
+      <div class="fg"><label class="lbl">İstifadəçi adı</label><input class="inp" id="l-user" placeholder="username"></div>
+      <div class="fg"><label class="lbl">Şifrə</label><input class="inp" id="l-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn btn-r w-full" onclick="doLogin()">Daxil Ol</button>
+      <div style="margin-top:0.8rem;background:#f5f6f8;border-radius:8px;padding:0.6rem;font-size:0.72rem;color:var(--muted);text-align:center;">
+        Demo: <b>kenan</b> / <b>pass123</b>
+      </div>
+    </div>
+    <div id="f-reg" style="display:none;">
+      <div class="bonus">🎁 Qeydiyyatdan keç, pulsuz elan ver!</div>
+      <div class="grid2">
+        <div class="fg"><label class="lbl">Ad Soyad</label><input class="inp" id="r-name" placeholder="Ad Soyad"></div>
+        <div class="fg"><label class="lbl">Username</label><input class="inp" id="r-user" placeholder="username"></div>
+      </div>
+      <div class="fg"><label class="lbl">Telefon</label><input class="inp" id="r-phone" placeholder="+994 50 000 00 00"></div>
+      <div class="fg"><label class="lbl">Şifrə</label><input class="inp" id="r-pass" type="password" placeholder="••••••••"></div>
+      <button class="btn btn-r w-full" onclick="doRegister()">Qeydiyyatdan Keç</button>
+    </div>
+  </div>
+</div>
+
+<!-- ██ AD DETAIL MODAL ██ -->
+<div class="overlay" id="adModal">
+  <div class="modal detail-modal">
+    <button class="modal-x" onclick="closeModal('adModal')">✕</button>
+    <div class="detail-img" id="adm-img"></div>
+    <div class="detail-price" id="adm-price"></div>
+    <div class="detail-title" id="adm-title"></div>
+    <div class="detail-meta">
+      <div class="dm-i">📂 <span id="adm-cat"></span></div>
+      <div class="dm-i">📍 <span id="adm-loc"></span></div>
+      <div class="dm-i">🕐 <span id="adm-date"></span></div>
+      <div class="dm-i">👁️ <span id="adm-views"></span> baxış</div>
+    </div>
+    <div class="detail-desc" id="adm-desc"></div>
+    <div class="seller-box">
+      <div class="seller-ava" id="adm-seller-ava"></div>
+      <div class="seller-info">
+        <div class="seller-name" id="adm-seller-name"></div>
+        <div class="seller-joined" id="adm-seller-joined"></div>
+      </div>
+      <button class="call-btn" id="adm-phone-btn">📞 Zəng Et</button>
+    </div>
+    <!-- Owner actions (only shows when it's your own ad) -->
+    <div class="owner-acts" id="adm-owner-acts" style="display:none;">
+      <button class="btn" style="background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;flex:1;" id="adm-edit-btn">✏️ Redaktə Et</button>
+      <button class="btn" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;border:1px solid #fcd34d;flex:1;" id="adm-boost-btn">🚀 Reklam Ver</button>
+      <button class="btn" style="background:#fee2e2;color:#dc2626;border:1px solid #fecaca;flex:1;" id="adm-del-btn">🗑️ Sil</button>
+    </div>
+  </div>
+</div>
+
+<!-- ██ POST AD MODAL ██ -->
+<div class="overlay" id="postModal">
+  <div class="modal post-modal">
+    <button class="modal-x" onclick="closeModal('postModal')">✕</button>
+    <div class="modal-logo"><h2>📢 Elan Ver</h2><p>Məhsulunuzu satın</p></div>
+    <div class="fg"><label class="lbl">Başlıq *</label><input class="inp" id="p-title" placeholder="Məhsulun adı..."></div>
+    <div class="grid2">
+      <div class="fg">
+        <label class="lbl">Kateqoriya *</label>
+        <select class="inp-sel" id="p-cat">
+          <option value="electronics">📱 Elektronika</option>
+          <option value="fashion">👗 Geyim</option>
+          <option value="home">🏠 Ev əşyaları</option>
+          <option value="auto">🚗 Avtomobil</option>
+          <option value="jobs">💼 İş elanları</option>
+          <option value="services">🔧 Xidmətlər</option>
+          <option value="kids">🧸 Uşaq</option>
+          <option value="sport">⚽ İdman</option>
+          <option value="other">📦 Digər</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="lbl">Qiymət (₼) — 0=Pulsuz</label>
+        <input class="inp" id="p-price" type="number" min="0" step="0.01" placeholder="0.00">
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="fg"><label class="lbl">Şəhər</label><input class="inp" id="p-city" placeholder="Bakı"></div>
+      <div class="fg"><label class="lbl">Emoji (şəkil)</label><input class="inp" id="p-emoji" placeholder="📱 🚗 👗 ..."></div>
+    </div>
+    <div class="fg"><label class="lbl">Açıqlama</label><textarea class="inp-ta" id="p-desc" placeholder="Məhsul haqqında ətraflı yazın..."></textarea></div>
+    <div class="fg"><label class="lbl">Telefon *</label><input class="inp" id="p-phone" placeholder="+994 50 000 00 00"></div>
+    <button class="btn btn-r w-full" onclick="postAd()">📢 Elanı Yerləşdir</button>
+  </div>
+</div>
+
+<!-- ██ EDIT AD MODAL ██ -->
+<div class="overlay" id="editAdModal">
+  <div class="modal post-modal" style="max-width:560px;">
+    <button class="modal-x" onclick="closeModal('editAdModal')">✕</button>
+    <div class="modal-logo"><h2>✏️ Elanı Redaktə Et</h2><p>Məlumatları yeniləyin</p></div>
+    <input type="hidden" id="ea-id">
+    <div class="fg"><label class="lbl">Başlıq *</label><input class="inp" id="ea-title" placeholder="Məhsulun adı..."></div>
+    <div class="grid2">
+      <div class="fg">
+        <label class="lbl">Kateqoriya</label>
+        <select class="inp-sel" id="ea-cat">
+          <option value="electronics">📱 Elektronika</option>
+          <option value="fashion">👗 Geyim</option>
+          <option value="home">🏠 Ev əşyaları</option>
+          <option value="auto">🚗 Avtomobil</option>
+          <option value="jobs">💼 İş elanları</option>
+          <option value="services">🔧 Xidmətlər</option>
+          <option value="kids">🧸 Uşaq</option>
+          <option value="sport">⚽ İdman</option>
+          <option value="other">📦 Digər</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="lbl">Qiymət (₼) — 0=Pulsuz</label>
+        <input class="inp" id="ea-price" type="number" min="0" step="0.01" placeholder="0.00">
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="fg"><label class="lbl">Şəhər</label><input class="inp" id="ea-city" placeholder="Bakı"></div>
+      <div class="fg"><label class="lbl">Emoji (şəkil)</label><input class="inp" id="ea-emoji" placeholder="📱 🚗 👗"></div>
+    </div>
+    <div class="fg"><label class="lbl">Açıqlama</label><textarea class="inp-ta" id="ea-desc" placeholder="Məhsul haqqında ətraflı yazın..."></textarea></div>
+    <div class="fg"><label class="lbl">Telefon *</label><input class="inp" id="ea-phone" placeholder="+994 50 000 00 00"></div>
+    <div style="display:flex;gap:0.6rem;">
+      <button class="btn btn-g" onclick="closeModal('editAdModal')" style="flex:1;">İmtina</button>
+      <button class="btn btn-r" onclick="saveEditAd()" style="flex:2;">💾 Yadda Saxla</button>
+    </div>
+  </div>
+</div>
+
+<!-- ██ BOOST (REKLAM VER) MODAL ██ -->
+<div class="overlay" id="boostModal">
+  <div class="modal boost-modal">
+    <button class="modal-x" onclick="closeModal('boostModal')">✕</button>
+    <div class="modal-logo">
+      <h2>🚀 Reklam Ver</h2>
+      <p id="boost-ad-name" style="font-weight:600;color:var(--text);"></p>
+    </div>
+    <input type="hidden" id="boost-ad-id">
+    <div class="boost-info">
+      ⭐ Reklamlı elanlar siyahının <b>ən üstünə</b> çıxır, qızıl çərçivə ilə seçilir və daha çox baxış alır!
+    </div>
+    <div class="boost-grid">
+      <div class="boost-card" id="bpkg-1" onclick="selectBoost(1)">
+        <div class="bc-ico">⚡</div>
+        <div class="bc-name">Standart</div>
+        <div class="bc-price">2₼</div>
+        <div class="bc-days">3 gün</div>
+      </div>
+      <div class="boost-card" id="bpkg-7" onclick="selectBoost(7)" style="position:relative;">
+        <div class="bc-badge">⭐ Məşhur</div>
+        <div class="bc-ico">🔥</div>
+        <div class="bc-name">Premium</div>
+        <div class="bc-price">5₼</div>
+        <div class="bc-days">7 gün</div>
+      </div>
+      <div class="boost-card" id="bpkg-30" onclick="selectBoost(30)">
+        <div class="bc-ico">👑</div>
+        <div class="bc-name">VIP</div>
+        <div class="bc-price">12₼</div>
+        <div class="bc-days">30 gün</div>
+      </div>
+    </div>
+    <div id="boost-selected-info" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:var(--green);margin-bottom:1rem;display:none;"></div>
+    <button class="btn btn-r w-full" style="background:linear-gradient(135deg,#f59e0b,#d97706);" onclick="activateBoost()">🚀 Reklamı Aktivləşdir</button>
+    <p style="font-size:0.7rem;color:var(--muted);text-align:center;margin-top:0.7rem;">Demo rejim — ödəniş tələb olunmur</p>
+  </div>
+</div>
+
+<!-- ██ CONFIRM DELETE MODAL ██ -->
+<div class="overlay" id="delConfirmModal">
+  <div class="modal" style="max-width:360px;">
+    <div style="font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;">🗑️ Elanı Sil</div>
+    <p id="del-confirm-msg" style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;"></p>
+    <div style="display:flex;gap:0.6rem;">
+      <button class="btn btn-g" onclick="closeModal('delConfirmModal')" style="flex:1;">İmtina</button>
+      <button class="btn btn-r" id="del-confirm-btn" style="flex:1;background:#dc2626;">🗑️ Sil</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- HOME -->
+<div id="page-home" class="page on">
+  <div class="hero-banner">
+    <h1>🛍️ Nəbiyev Store</h1>
+    <p>Azərbaycanda ən böyük alqı-satqı platformu — pulsuz elan ver!</p>
+    <div class="hero-search">
+      <input id="heroSearch" placeholder="Nə axtarırsınız?..." onkeydown="if(event.key==='Enter'){document.getElementById('mainSearch').value=this.value;doSearch();}">
+      <button onclick="document.getElementById('mainSearch').value=document.getElementById('heroSearch').value;doSearch();">Axtar</button>
+    </div>
+  </div>
+  <div style="max-width:1280px;margin:0 auto;padding:1.5rem;">
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:2rem;">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--accent);" id="hst-ads">0</div>
+        <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-top:0.2rem;">Aktiv Elan</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--green);" id="hst-cats">9</div>
+        <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-top:0.2rem;">Kateqoriya</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--blue);" id="hst-free">0</div>
+        <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-top:0.2rem;">Pulsuz Elan</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--yellow);" id="hst-today">0</div>
+        <div style="font-size:0.75rem;color:var(--muted);font-weight:600;margin-top:0.2rem;">Bugün Yerləşib</div>
+      </div>
+    </div>
+    <!-- Categories -->
+    <div style="margin-bottom:2rem;">
+      <div class="sec-title-row"><div class="sec-h">📂 Kateqoriyalar</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.8rem;" id="homeCats"></div>
+    </div>
+    <!-- Latest -->
+    <div>
+      <div class="sec-title-row">
+        <div class="sec-h">🆕 Son Elanlar</div>
+        <a class="view-all" onclick="navigate('shop')">Hamısını gör →</a>
+      </div>
+      <div class="ad-grid" id="homeLatest"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<div id="page-shop" class="page">
+  <div class="main-wrap">
+    <aside class="sidebar-cats">
+      <div class="sb-title">Kateqoriyalar</div>
+      <div id="sidebarCats"></div>
+    </aside>
+    <div class="content-area">
+      <div class="content-hdr">
+        <div>
+          <div class="content-title" id="shopTitle">Bütün Elanlar</div>
+          <div class="content-count" id="shopCount"></div>
+        </div>
+        <select class="sort-select" id="sortSel" onchange="renderShop()">
+          <option value="new">Yeni əvvəl</option>
+          <option value="cheap">Ucuz əvvəl</option>
+          <option value="expensive">Baha əvvəl</option>
+          <option value="popular">Populyar</option>
+        </select>
+      </div>
+      <div class="ad-grid" id="shopGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div id="page-profile" class="page">
+  <div class="profile-wrap">
+    <div class="profile-card" id="profileCard"></div>
+    <div class="profile-tabs">
+      <button class="ptab on" onclick="showPTab('ads',this)">📢 Elanlarım</button>
+      <button class="ptab" onclick="showPTab('favs',this)">❤️ Sevimlilər</button>
+      <button class="ptab" onclick="showPTab('settings',this)">⚙️ Tənzimləmələr</button>
+    </div>
+    <div id="ptab-ads">
+      <div class="sec-title-row">
+        <div class="sec-h">Mənim Elanlarım</div>
+        <button class="btn btn-r btn-sm" onclick="showModal('postModal')">+ Yeni Elan</button>
+      </div>
+      <div class="my-ads-grid" id="myAdsGrid"></div>
+    </div>
+    <div id="ptab-favs" style="display:none;">
+      <div class="sec-h" style="margin-bottom:1rem;">❤️ Sevimli Elanlar</div>
+      <div class="my-ads-grid" id="myFavsGrid"></div>
+    </div>
+    <div id="ptab-settings" style="display:none;">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.5rem;max-width:420px;">
+        <h3 style="font-size:0.9rem;font-weight:700;margin-bottom:1.2rem;">👤 Məlumatları Yenilə</h3>
+        <div class="fg"><label class="lbl">Ad Soyad</label><input class="inp" id="s-name"></div>
+        <div class="fg"><label class="lbl">Telefon</label><input class="inp" id="s-phone"></div>
+        <div class="fg"><label class="lbl">Yeni Şifrə (boş burax = dəyişmə)</label><input class="inp" id="s-pass" type="password" placeholder="••••••••"></div>
+        <button class="btn btn-r btn-sm" onclick="saveSettings()">💾 Yadda Saxla</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════ DATA ═══════════════
+const CATS = {
+  electronics:{label:'Elektronika',icon:'📱'},
+  fashion:{label:'Geyim',icon:'👗'},
+  home:{label:'Ev əşyaları',icon:'🏠'},
+  auto:{label:'Avtomobil',icon:'🚗'},
+  jobs:{label:'İş elanları',icon:'💼'},
+  services:{label:'Xidmətlər',icon:'🔧'},
+  kids:{label:'Uşaq',icon:'🧸'},
+  sport:{label:'İdman',icon:'⚽'},
+  other:{label:'Digər',icon:'📦'},
+};
+
+function load(k){try{return JSON.parse(localStorage.getItem(k))||[];}catch{return [];}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
+function loadObj(k,def={}){try{return JSON.parse(localStorage.getItem(k))||def;}catch{return def;}}
+
+function initDB(){
+  if(localStorage.getItem('ns_init')) return;
+  const users=[
+    {id:1,name:'Admin Rəşid',username:'admin',phone:'+994501234567',pass:'admin123',role:'admin',joined:'2024-01-01'},
+    {id:2,name:'Kənan Babayev',username:'kenan',phone:'+994502223344',pass:'pass123',role:'user',joined:'2024-02-10'},
+    {id:3,name:'Sevinc Hüseynova',username:'sevinc',phone:'+994703334455',pass:'pass123',role:'user',joined:'2024-02-15'},
+    {id:4,name:'Nicat Əliyev',username:'nicat',phone:'+994554445566',pass:'pass123',role:'user',joined:'2024-03-01'},
+  ];
+  const ads=[
+    {id:1,title:'iPhone 14 Pro Max — 256GB',emoji:'📱',cat:'electronics',price:1299,city:'Bakı',desc:'Yeni kimi, cızığı yoxdur. Qutusu, bütün aksesuarları var. Ciddi alıcılara endirimlər mümkündür.',phone:'+994502223344',userId:2,views:234,date:'2024-03-20',status:'active'},
+    {id:2,title:'Nike Air Max 270 — 42 ölçü',emoji:'👟',cat:'fashion',price:89,city:'Gəncə',desc:'Orijinal Nike krossovkası, bir dəfə geyilib, əla vəziyyətdə.',phone:'+994703334455',userId:3,views:87,date:'2024-03-21',status:'active'},
+    {id:3,title:'Samsung OLED TV 55"',emoji:'📺',cat:'electronics',price:750,city:'Bakı',desc:'55 düym OLED TV, 4K, Smart. 2 il işlədilib, hər şey qaydasında.',phone:'+994502223344',userId:2,views:312,date:'2024-03-22',status:'active'},
+    {id:4,title:'Toyota Camry 2020',emoji:'🚗',cat:'auto',price:28500,city:'Bakı',desc:'2020 il, 45.000 km, tam tam vəziyyətdə. Qara rəng, avtomatik, yanacaq benzin.',phone:'+994554445566',userId:4,views:501,date:'2024-03-22',status:'active'},
+    {id:5,title:'Uşaq velosipedi',emoji:'🚲',cat:'kids',price:65,city:'Sumqayıt',desc:'5-8 yaş üçün velosiped, çox az işlənib, sarı rəng.',phone:'+994703334455',userId:3,views:43,date:'2024-03-23',status:'active'},
+    {id:6,title:'Pulsuz köhnə divanlar',emoji:'🛋️',cat:'home',price:0,city:'Bakı',desc:'2 ədəd köhnə divan, aparana verirəm. Öz nəqliyyatın olsun.',phone:'+994554445566',userId:4,views:156,date:'2024-03-23',status:'active'},
+    {id:7,title:'Proqramçı tələb olunur',emoji:'💻',cat:'jobs',price:0,city:'Bakı',desc:'React + Node.js biliyi olan proqramçı axtarılır. Tam iş günü, ofis + remote.',phone:'+994502223344',userId:2,views:267,date:'2024-03-24',status:'active'},
+    {id:8,title:'Mühərrik təmiri xidməti',emoji:'🔧',cat:'services',price:50,city:'Bakı',desc:'Avtomobil mühərrik təmiri, 10 illik təcrübə, qarantiya verilir.',phone:'+994554445566',userId:4,views:98,date:'2024-03-24',status:'active'},
+    {id:9,title:'Adidas idman kostyumu',emoji:'👕',cat:'fashion',price:45,city:'Lənkəran',desc:'Orijinal Adidas kostyum, M ölçü, göy rəng, az geyilib.',phone:'+994703334455',userId:3,views:62,date:'2024-03-25',status:'active'},
+    {id:10,title:'PlayStation 5 + oyunlar',emoji:'🎮',cat:'electronics',price:650,city:'Bakı',desc:'PS5 disc versiya, 5 oyun ilə birlikdə. Yaxşı vəziyyətdə.',phone:'+994502223344',userId:2,views:445,date:'2024-03-25',status:'active'},
+    {id:11,title:'Futbol topları (5 ədəd)',emoji:'⚽',cat:'sport',price:30,city:'Mingəçevir',desc:'5 ədəd futbol topu, uşaq komandası üçün satılır.',phone:'+994554445566',userId:4,views:29,date:'2024-03-26',status:'active'},
+    {id:12,title:'MacBook Air M2 — 2023',emoji:'💻',cat:'electronics',price:1150,city:'Bakı',desc:'MacBook Air M2 çip, 8GB RAM, 256GB SSD. Ustadan çıxmayıb.',phone:'+994703334455',userId:3,views:378,date:'2024-03-26',status:'active'},
+  ];
+  save('ns_users',users); save('ns_ads',ads);
+  localStorage.setItem('ns_init','1');
+}
+
+// ═══════════════ STATE ═══════════════
+let CU = null;
+let curPage = 'home';
+let shopCatFilter = 'all';
+let favs = loadObj('ns_favs_'+Date.now(), []);
+
+// ═══════════════ AUTH ═══════════════
+function switchAuthTab(t){
+  document.getElementById('f-login').style.display=t==='login'?'block':'none';
+  document.getElementById('f-reg').style.display=t==='reg'?'block':'none';
+  document.getElementById('t-login').classList.toggle('on',t==='login');
+  document.getElementById('t-reg').classList.toggle('on',t==='reg');
+}
+
+function doLogin(){
+  const u=document.getElementById('l-user').value.trim();
+  const p=document.getElementById('l-pass').value;
+  const users=load('ns_users');
+  const user=users.find(x=>x.username===u&&x.pass===p&&x.role==='user');
+  if(!user){toast('Yanlış məlumat!','e');return;}
+  CU=user;
+  favs=loadObj('ns_favs_'+CU.id,[]);
+  closeModal('authModal');
+  updateHeader();
+  toast(`Xoş gəldin, ${user.name}! 👋`,'s');
+}
+
+function doRegister(){
+  const name=document.getElementById('r-name').value.trim();
+  const username=document.getElementById('r-user').value.trim();
+  const phone=document.getElementById('r-phone').value.trim();
+  const pass=document.getElementById('r-pass').value;
+  if(!name||!username||!phone||!pass){toast('Bütün sahələri doldurun!','e');return;}
+  const users=load('ns_users');
+  if(users.find(u=>u.username===username)){toast('Bu username mövcuddur!','e');return;}
+  const nu={id:Date.now(),name,username,phone,pass,role:'user',joined:new Date().toISOString().split('T')[0]};
+  users.push(nu); save('ns_users',users);
+  CU=nu; favs=[];
+  closeModal('authModal');
+  updateHeader();
+  toast('Qeydiyyat uğurlu! Elan verə bilərsiniz 🎉','s');
+}
+
+function doLogout(){
+  CU=null;
+  updateHeader();
+  navigate('home');
+  toast('Çıxış edildi 👋','i');
+}
+
+function updateHeader(){
+  const el=document.getElementById('headerActions');
+  if(CU){
+    el.innerHTML=`
+      <div class="user-chip" onclick="navigate('profile')">
+        <div class="u-dot">${CU.name[0]}</div>
+        <span>${CU.username}</span>
+      </div>
+      <button class="hbtn hbtn-fill" onclick="showModal('postModal')">+ Elan ver</button>
+      <button class="hbtn hbtn-outline" onclick="doLogout()">Çıxış</button>`;
+  } else {
+    el.innerHTML=`
+      <button class="hbtn hbtn-outline" onclick="showModal('authModal')">Giriş</button>
+      <button class="hbtn hbtn-fill" onclick="showModal('authModal')">Qeydiyyat</button>`;
+  }
+}
+
+// ═══════════════ NAVIGATION ═══════════════
+function navigate(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
+  document.getElementById('page-'+p).classList.add('on');
+  curPage=p;
+  if(p==='home') renderHome();
+  if(p==='shop') renderShop();
+  if(p==='profile'){if(!CU){showModal('authModal');navigate('home');return;}renderProfile();}
+  window.scrollTo(0,0);
+}
+
+function doSearch(){
+  const q=document.getElementById('mainSearch').value.trim();
+  shopCatFilter='all';
+  navigate('shop');
+  setTimeout(()=>{
+    if(q) renderShopFiltered(q,'all');
+  },50);
+}
+
+// ═══════════════ CATS ═══════════════
+function renderCatTabs(){
+  const tabs=['all',...Object.keys(CATS)];
+  document.getElementById('catTabs').innerHTML=tabs.map(c=>`
+    <button class="cat-tab${c===shopCatFilter?' on':''}" onclick="filterCat('${c}')">
+      ${c==='all'?'🏠 Hamısı':CATS[c].icon+' '+CATS[c].label}
+    </button>`).join('');
+}
+
+function filterCat(c){
+  shopCatFilter=c;
+  navigate('shop');
+}
+
+// ═══════════════ HOME ═══════════════
+function renderHome(){
+  renderCatTabs();
+  const ads=load('ns_ads').filter(a=>a.status==='active');
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('hst-ads').textContent=ads.length;
+  document.getElementById('hst-free').textContent=ads.filter(a=>a.price===0).length;
+  document.getElementById('hst-today').textContent=ads.filter(a=>a.date===today).length;
+
+  document.getElementById('homeCats').innerHTML=Object.entries(CATS).map(([k,v])=>{
+    const cnt=ads.filter(a=>a.cat===k).length;
+    return `<div onclick="filterCat('${k}')" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:0.9rem 0.5rem;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">
+      <div style="font-size:1.6rem;margin-bottom:0.3rem;">${v.icon}</div>
+      <div style="font-size:0.72rem;font-weight:600;">${v.label}</div>
+      <div style="font-size:0.65rem;color:var(--muted);margin-top:0.1rem;">${cnt} elan</div>
+    </div>`;
+  }).join('');
+
+  const latest=[...ads].sort((a,b)=>b.id-a.id).slice(0,8);
+  document.getElementById('homeLatest').innerHTML=latest.map(a=>adCard(a)).join('');
+}
+
+// ═══════════════ SHOP ═══════════════
+function renderShop(){
+  renderShopFiltered(document.getElementById('mainSearch').value||'', shopCatFilter);
+}
+
+function renderShopFiltered(q,cat){
+  renderCatTabs();
+  const sort=document.getElementById('sortSel')?.value||'new';
+  let ads=load('ns_ads').filter(a=>a.status==='active');
+  if(cat&&cat!=='all') ads=ads.filter(a=>a.cat===cat);
+  if(q) ads=ads.filter(a=>(a.title+a.desc).toLowerCase().includes(q.toLowerCase()));
+  if(sort==='cheap') ads.sort((a,b)=>a.price-b.price);
+  else if(sort==='expensive') ads.sort((a,b)=>b.price-a.price);
+  else if(sort==='popular') ads.sort((a,b)=>b.views-a.views);
+  else ads.sort((a,b)=>b.id-a.id);
+  // VIP elanlar hər zaman üstə
+  ads.sort((a,b)=>(isAdVip(b)?1:0)-(isAdVip(a)?1:0));
+
+  const title=cat==='all'||!cat?'Bütün Elanlar':(CATS[cat]?.icon+' '+CATS[cat]?.label);
+  document.getElementById('shopTitle').textContent=title;
+  document.getElementById('shopCount').textContent=ads.length+' elan tapıldı';
+
+  // sidebar
+  const allAds=load('ns_ads').filter(a=>a.status==='active');
+  document.getElementById('sidebarCats').innerHTML=`
+    <div class="sb-item${shopCatFilter==='all'?' on':''}" onclick="filterCat('all')">
+      <div class="sb-left">🏠 Hamısı</div>
+      <span class="sb-count">${allAds.length}</span>
+    </div>`+
+    Object.entries(CATS).map(([k,v])=>{
+      const cnt=allAds.filter(a=>a.cat===k).length;
+      return `<div class="sb-item${shopCatFilter===k?' on':''}" onclick="filterCat('${k}')">
+        <div class="sb-left">${v.icon} ${v.label}</div>
+        <span class="sb-count">${cnt}</span>
+      </div>`;
+    }).join('');
+
+  document.getElementById('shopGrid').innerHTML=ads.length
+    ? ads.map(a=>adCard(a)).join('')
+    : `<div class="empty" style="grid-column:1/-1;"><div class="ei">🔍</div><h3>Elan tapılmadı</h3><p>Başqa şərtlə axtar</p></div>`;
+}
+
+// ═══════════════ AD CARD ═══════════════
+function adCard(a){
+  const userFavs=CU?loadObj('ns_favs_'+CU.id,[]):[];
+  const isFav=userFavs.includes(a.id);
+  const isNew=isNewAd(a.date);
+  const isVip=isAdVip(a);
+  return `<div class="ac${isVip?' vip':''}" onclick="openAd(${a.id})">
+    <div class="ac-img">
+      <div class="ac-img-inner">${a.emoji}</div>
+      ${isVip?'<div class="ac-vip-badge">👑 VIP</div>':isNew?'<div class="ac-new">Yeni</div>':''}
+      <div class="ac-fav${isFav?' active':''}" onclick="event.stopPropagation();toggleFav(${a.id},this)">${isFav?'❤️':'🤍'}</div>
+    </div>
+    <div class="ac-body">
+      <div class="ac-price${a.price===0?' free':''}">${a.price===0?'Pulsuz':a.price.toLocaleString()+'₼'}</div>
+      <div class="ac-title">${a.title}</div>
+      <div class="ac-loc">📍 ${a.city}</div>
+    </div>
+  </div>`;
+}
+
+function isNewAd(date){
+  const d=new Date(date); const now=new Date();
+  return (now-d)<3*24*60*60*1000;
+}
+
+function isAdVip(a){
+  return a.boostUntil && new Date(a.boostUntil)>new Date();
+}
+
+// ═══════════════ AD DETAIL ═══════════════
+function openAd(id){
+  const ads=load('ns_ads');
+  const a=ads.find(x=>x.id===id);
+  if(!a) return;
+  // increment views
+  const idx=ads.findIndex(x=>x.id===id);
+  ads[idx].views=(ads[idx].views||0)+1;
+  save('ns_ads',ads);
+
+  const users=load('ns_users');
+  const seller=users.find(u=>u.id===a.userId);
+  const isVip=isAdVip(a);
+
+  document.getElementById('adm-img').textContent=a.emoji;
+  document.getElementById('adm-price').textContent=a.price===0?'Pulsuz':a.price.toLocaleString()+'₼';
+  document.getElementById('adm-price').className='detail-price'+(a.price===0?' free':'');
+  document.getElementById('adm-title').innerHTML=a.title+(isVip?' <span class="vip-badge">👑 VIP Elan</span>':'');
+  document.getElementById('adm-cat').textContent=CATS[a.cat]?.label||a.cat;
+  document.getElementById('adm-loc').textContent=a.city;
+  document.getElementById('adm-date').textContent=a.date;
+  document.getElementById('adm-views').textContent=ads[idx].views;
+  document.getElementById('adm-desc').textContent=a.desc;
+  document.getElementById('adm-seller-ava').textContent=seller?.name?.[0]||'?';
+  document.getElementById('adm-seller-name').textContent=seller?.name||'İstifadəçi';
+  document.getElementById('adm-seller-joined').textContent='Qeydiyyat: '+(seller?.joined||'');
+  document.getElementById('adm-phone-btn').onclick=()=>{
+    toast('📞 '+a.phone,'i');
+    document.getElementById('adm-phone-btn').textContent='📞 '+a.phone;
+  };
+
+  // Owner actions
+  const ownerDiv=document.getElementById('adm-owner-acts');
+  if(CU && CU.id===a.userId){
+    ownerDiv.style.display='flex';
+    document.getElementById('adm-edit-btn').onclick=()=>{closeModal('adModal');openEditAd(a.id);};
+    document.getElementById('adm-boost-btn').onclick=()=>{closeModal('adModal');openBoost(a.id);};
+    document.getElementById('adm-del-btn').onclick=()=>{closeModal('adModal');confirmDeleteAd(a.id,a.title);};
+  } else {
+    ownerDiv.style.display='none';
+  }
+  showModal('adModal');
+}
+
+// ═══════════════ FAV ═══════════════
+function toggleFav(id,el){
+  if(!CU){showModal('authModal');return;}
+  let userFavs=loadObj('ns_favs_'+CU.id,[]);
+  if(userFavs.includes(id)){
+    userFavs=userFavs.filter(f=>f!==id);
+    el.textContent='🤍'; el.classList.remove('active');
+    toast('Sevimlilərdən çıxarıldı','i');
+  } else {
+    userFavs.push(id);
+    el.textContent='❤️'; el.classList.add('active');
+    toast('Sevimlilərə əlavə edildi ❤️','s');
+  }
+  save('ns_favs_'+CU.id, userFavs);
+}
+
+// ═══════════════ POST AD ═══════════════
+function postAd(){
+  if(!CU){closeModal('postModal');showModal('authModal');return;}
+  const title=document.getElementById('p-title').value.trim();
+  const phone=document.getElementById('p-phone').value.trim();
+  const emoji=document.getElementById('p-emoji').value.trim()||'📦';
+  if(!title||!phone){toast('Başlıq və telefon mütləqdir!','e');return;}
+  const ads=load('ns_ads');
+  ads.push({
+    id:Date.now(), title, emoji,
+    cat:document.getElementById('p-cat').value,
+    price:parseFloat(document.getElementById('p-price').value)||0,
+    city:document.getElementById('p-city').value.trim()||'Bakı',
+    desc:document.getElementById('p-desc').value.trim(),
+    phone, userId:CU.id,
+    views:0, date:new Date().toISOString().split('T')[0], status:'active'
+  });
+  save('ns_ads',ads);
+  closeModal('postModal');
+  ['p-title','p-price','p-city','p-emoji','p-desc','p-phone'].forEach(id=>{document.getElementById(id).value='';});
+  toast('✅ Elan uğurla yerləşdirildi!','s');
+  renderHome();
+}
+
+// ═══════════════ PROFILE ═══════════════
+function renderProfile(){
+  if(!CU) return;
+  document.getElementById('profileCard').innerHTML=`
+    <div class="profile-ava">${CU.name[0]}</div>
+    <div class="profile-info">
+      <h2>${CU.name}</h2>
+      <p>@${CU.username} · ${CU.phone}</p>
+      <p style="margin-top:0.2rem;">Qeydiyyat: ${CU.joined}</p>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:1.5rem;text-align:center;">
+      <div>
+        <div style="font-size:1.4rem;font-weight:700;color:var(--accent);">${load('ns_ads').filter(a=>a.userId===CU.id&&a.status==='active').length}</div>
+        <div style="font-size:0.72rem;color:var(--muted);font-weight:600;">Elan</div>
+      </div>
+      <div>
+        <div style="font-size:1.4rem;font-weight:700;color:var(--blue);">${loadObj('ns_favs_'+CU.id,[]).length}</div>
+        <div style="font-size:0.72rem;color:var(--muted);font-weight:600;">Sevimli</div>
+      </div>
+    </div>`;
+  document.getElementById('s-name').value=CU.name;
+  document.getElementById('s-phone').value=CU.phone;
+  showPTab('ads',document.querySelector('.ptab'));
+}
+
+function showPTab(t,el){
+  ['ads','favs','settings'].forEach(x=>{document.getElementById('ptab-'+x).style.display=x===t?'block':'none';});
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+  if(el) el.classList.add('on');
+  if(t==='ads'){
+    const myAds=load('ns_ads').filter(a=>a.userId===CU.id&&a.status==='active');
+    document.getElementById('myAdsGrid').innerHTML=myAds.length
+      ? myAds.map(a=>{
+          const isVip=isAdVip(a);
+          return `<div class="my-ac">
+            <div class="my-ac-img" onclick="openAd(${a.id})">
+              ${a.emoji}
+              ${isVip?'<div class="my-ac-vip">👑 VIP</div>':''}
+            </div>
+            <div class="my-ac-body">
+              <div class="my-ac-price${a.price===0?' free':''}">${a.price===0?'Pulsuz':a.price.toLocaleString()+'₼'}</div>
+              <div class="my-ac-title">${a.title}</div>
+              ${isVip?`<div style="font-size:0.68rem;color:var(--yellow);font-weight:600;margin-bottom:0.4rem;">🕐 VIP: ${new Date(a.boostUntil).toLocaleDateString('az')}-dək</div>`:''}
+              <div class="my-ac-acts">
+                <button class="abtn abtn-edit" onclick="openEditAd(${a.id})">✏️ Redaktə</button>
+                <button class="abtn abtn-boost" onclick="openBoost(${a.id})">${isVip?'👑 Aktiv':'🚀 Reklam'}</button>
+                <button class="abtn abtn-del" onclick="confirmDeleteAd(${a.id},'${a.title.replace(/'/g,"\\'").replace(/"/g,'\\"')}')">🗑️ Sil</button>
+              </div>
+            </div>
+          </div>`;
+        }).join('')
+      : `<div class="empty"><div class="ei">📢</div><h3>Elan yoxdur</h3><p>İlk elanınızı verin!</p></div>`;
+  }
+  if(t==='favs'){
+    const userFavs=loadObj('ns_favs_'+CU.id,[]);
+    const favAds=load('ns_ads').filter(a=>userFavs.includes(a.id));
+    document.getElementById('myFavsGrid').innerHTML=favAds.length
+      ? favAds.map(a=>adCard(a)).join('')
+      : `<div class="empty"><div class="ei">❤️</div><h3>Sevimli yoxdur</h3><p>Xoşunuza gələn elanları sevimlilərə əlavə edin</p></div>`;
+  }
+}
+
+function confirmDeleteAd(id, title){
+  document.getElementById('del-confirm-msg').textContent=`"${title}" elanını silmək istəyirsiniz? Bu əməliyyat geri alına bilməz.`;
+  document.getElementById('del-confirm-btn').onclick=()=>doDeleteAd(id);
+  showModal('delConfirmModal');
+}
+
+function doDeleteAd(id){
+  let ads=load('ns_ads');
+  ads=ads.filter(a=>a.id!==id);
+  save('ns_ads',ads);
+  closeModal('delConfirmModal');
+  toast('🗑️ Elan silindi','i');
+  showPTab('ads',null);
+}
+
+// ═══════════════ EDIT AD ═══════════════
+function openEditAd(id){
+  const a=load('ns_ads').find(x=>x.id===id);
+  if(!a) return;
+  document.getElementById('ea-id').value=a.id;
+  document.getElementById('ea-title').value=a.title;
+  document.getElementById('ea-cat').value=a.cat;
+  document.getElementById('ea-price').value=a.price;
+  document.getElementById('ea-city').value=a.city;
+  document.getElementById('ea-emoji').value=a.emoji;
+  document.getElementById('ea-desc').value=a.desc;
+  document.getElementById('ea-phone').value=a.phone;
+  showModal('editAdModal');
+}
+
+function saveEditAd(){
+  const id=parseInt(document.getElementById('ea-id').value);
+  const title=document.getElementById('ea-title').value.trim();
+  const phone=document.getElementById('ea-phone').value.trim();
+  if(!title||!phone){toast('Başlıq və telefon mütləqdir!','e');return;}
+  const ads=load('ns_ads');
+  const idx=ads.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  ads[idx].title=title;
+  ads[idx].cat=document.getElementById('ea-cat').value;
+  ads[idx].price=parseFloat(document.getElementById('ea-price').value)||0;
+  ads[idx].city=document.getElementById('ea-city').value.trim()||ads[idx].city;
+  ads[idx].emoji=document.getElementById('ea-emoji').value.trim()||ads[idx].emoji;
+  ads[idx].desc=document.getElementById('ea-desc').value.trim();
+  ads[idx].phone=phone;
+  save('ns_ads',ads);
+  closeModal('editAdModal');
+  toast('✅ Elan yeniləndi!','s');
+  if(curPage==='profile') showPTab('ads',null);
+  else if(curPage==='shop') renderShop();
+  else renderHome();
+}
+
+// ═══════════════ BOOST / REKLAM ═══════════════
+let boostAdId=null;
+let selectedBoostDays=7;
+const BOOST_PKGS={1:{days:3,price:2,label:'Standart — 3 gün'},7:{days:7,price:5,label:'Premium — 7 gün'},30:{days:30,price:12,label:'VIP — 30 gün'}};
+
+function openBoost(id){
+  const a=load('ns_ads').find(x=>x.id===id);
+  if(!a) return;
+  boostAdId=id;
+  selectedBoostDays=7;
+  document.getElementById('boost-ad-id').value=id;
+  document.getElementById('boost-ad-name').textContent='📢 '+a.title;
+  document.querySelectorAll('.boost-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('bpkg-7').classList.add('selected');
+  document.getElementById('boost-selected-info').style.display='none';
+  showModal('boostModal');
+}
+
+function selectBoost(days){
+  selectedBoostDays=days;
+  document.querySelectorAll('.boost-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('bpkg-'+days).classList.add('selected');
+  const pkg=BOOST_PKGS[days];
+  const infoEl=document.getElementById('boost-selected-info');
+  infoEl.style.display='block';
+  infoEl.innerHTML=`✅ <b>${pkg.label}</b> seçildi — <b>${pkg.price}₼</b>`;
+}
+
+function activateBoost(){
+  const id=parseInt(document.getElementById('boost-ad-id').value)||boostAdId;
+  const pkg=BOOST_PKGS[selectedBoostDays];
+  const ads=load('ns_ads');
+  const idx=ads.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  const until=new Date();
+  until.setDate(until.getDate()+pkg.days);
+  ads[idx].boostUntil=until.toISOString();
+  ads[idx].boostPkg=selectedBoostDays;
+  save('ns_ads',ads);
+  closeModal('boostModal');
+  toast(`🚀 Reklam aktivləşdirildi! ${pkg.label}`,'s');
+  if(curPage==='profile') showPTab('ads',null);
+  else if(curPage==='shop') renderShop();
+  else renderHome();
+}
+
+
+function saveSettings(){
+  const name=document.getElementById('s-name').value.trim();
+  const phone=document.getElementById('s-phone').value.trim();
+  const pass=document.getElementById('s-pass').value;
+  if(!name||!phone){toast('Sahələri doldurun!','e');return;}
+  const users=load('ns_users');
+  const idx=users.findIndex(u=>u.id===CU.id);
+  users[idx].name=name; users[idx].phone=phone;
+  if(pass) users[idx].pass=pass;
+  CU=users[idx]; save('ns_users',users);
+  updateHeader(); renderProfile();
+  toast('✅ Məlumatlar yeniləndi!','s');
+}
+
+// ═══════════════ MODAL ═══════════════
+function showModal(id){document.getElementById(id).classList.add('on');}
+function closeModal(id){document.getElementById(id).classList.remove('on');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('on');}));
+
+// ═══════════════ TOAST ═══════════════
+function toast(msg,t='i'){
+  const icons={s:'✅',e:'❌',i:'ℹ️'};
+  const el=document.createElement('div');
+  el.className=`toast ${t}`;
+  el.innerHTML=`<span>${icons[t]}</span> ${msg}`;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(()=>el.remove(),3500);
+}
+
+// ═══════════════ INIT ═══════════════
+initDB();
+updateHeader();
+renderHome();
+</script>
+</body>
+</html>
